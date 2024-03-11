@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace MenuCLI
 {
@@ -12,18 +13,22 @@ namespace MenuCLI
 
         private bool _waitForUserInput;
 
-        internal MenuChoice(string displayString, Func<Task> asyncCallback, bool waitForUserInput= true)
+        private IConsoleWrapper _consoleWrapper;
+
+        internal MenuChoice(string displayString, Func<Task> asyncCallback, IConsoleWrapper consoleWrapper, bool waitForUserInput= true)
         {
             _displayString = displayString;
             _asyncCallback = asyncCallback;
             _waitForUserInput = waitForUserInput;
+            _consoleWrapper = consoleWrapper;
         }
 
-        internal MenuChoice(string displayString, Action action, bool waitForUserInput = true)
+        internal MenuChoice(string displayString, Action action, IConsoleWrapper consoleWrapper, bool waitForUserInput = true)
         {
             _displayString = displayString;
             _callback = action;
             _waitForUserInput= waitForUserInput;
+            _consoleWrapper = consoleWrapper;
         }
 
         internal void Display(int index)
@@ -34,7 +39,11 @@ namespace MenuCLI
 
         internal async Task Run()
         {
-            Console.Clear();
+            if (!Console.IsOutputRedirected)
+            {
+                Console.Clear();
+            }
+
             Console.WriteLine(_displayString);
             Console.WriteLine();
 
@@ -55,7 +64,7 @@ namespace MenuCLI
             {
                 Console.WriteLine();
                 Console.WriteLine("Press a key to continue...");
-                Console.ReadKey();
+                _consoleWrapper.WaitForUserKeyPress();
             }
         }
     }

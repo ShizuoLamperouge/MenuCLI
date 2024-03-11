@@ -24,8 +24,8 @@ namespace MenuCLI
 
         public ChoiceAttribute(string choiceDescription, Type? subMenu = default)
         {
-            ChoiceDescription = choiceDescription;  
-            SubMenu = subMenu;
+            this.ChoiceDescription = choiceDescription;  
+            this.SubMenu = subMenu;
         }
     }
 }

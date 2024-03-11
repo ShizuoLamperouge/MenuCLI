@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sandbox
 {
-    internal class DependancyInjectionExemple
+    public class DependancyInjectionExemple
     {
         public Guid ExempleOfASyncCall()
         {

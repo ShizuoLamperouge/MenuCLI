@@ -24,7 +24,7 @@ namespace MenuCLI
 
         public MenuAttribute(string title)
         {
-            Title = title;
+            this.Title = title;
         }
     }
 }

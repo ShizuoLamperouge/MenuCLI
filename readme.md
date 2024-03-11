@@ -96,5 +96,13 @@ The dependency injection still works, but maybe not as expected. The callback me
 ## Dependency Injection
 All the menu classes are resolved by dependency injection, so you can use it too! (see the sandbox project for a more detailed exemple)
 
+## E2E tests
+
+To skip the `Console.ReadKey()` and be able to test a user sequence, start the menu with the optional parameter like in this exemple:
+```cs
+await host.Services.StartMenu(true);
+```
+You can see a real example of E2E tests in the `Tests` project.
+
 ## Future work
 More work is planned like a more complex submenu redirection depending of the callback return, progress bar handling and lazy loading of the menu classes (right now they are eagerly loaded at the bootstrap of the app).

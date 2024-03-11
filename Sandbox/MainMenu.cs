@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Sandbox
 {
     [Menu("Main Menu", Description = "This is a wonderfull description")]
-    internal class MainMenu
+    public class MainMenu
     {
         private readonly DependancyInjectionExemple _injectionExemple;
 

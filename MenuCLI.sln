@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Sandbox\Sandbox.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MenuCLI", "MenuCLI\MenuCLI.csproj", "{4FE151C3-5D10-4FFA-9D18-06AEF0155B9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{13BF4022-0A73-41A9-BEB9-E8A47720E62C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4FE151C3-5D10-4FFA-9D18-06AEF0155B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FE151C3-5D10-4FFA-9D18-06AEF0155B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FE151C3-5D10-4FFA-9D18-06AEF0155B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13BF4022-0A73-41A9-BEB9-E8A47720E62C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13BF4022-0A73-41A9-BEB9-E8A47720E62C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13BF4022-0A73-41A9-BEB9-E8A47720E62C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13BF4022-0A73-41A9-BEB9-E8A47720E62C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

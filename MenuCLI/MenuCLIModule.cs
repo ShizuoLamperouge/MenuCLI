@@ -39,9 +39,10 @@ namespace MenuCLI
         /// Start MenuCLI. Execute it after the Dependency Injection configuration.
         /// </summary>
         /// <param name="serviceProvider"></param>
+        /// <param name="testMod">Test mod where the ConsoleWrapper that wait for a Console.ReadKey() is replaced by a dummy wrapper</param>
         /// <returns></returns>
         /// <exception cref="ApplicationException">Internal error</exception>
-        public static async Task StartMenu(this IServiceProvider serviceProvider)
+        public static async Task StartMenu(this IServiceProvider serviceProvider, bool testMod = false)
         {
             using IServiceScope serviceScope = serviceProvider.CreateScope();
             IServiceProvider provider = serviceScope.ServiceProvider;
@@ -50,7 +51,7 @@ namespace MenuCLI
                 throw new ApplicationException("The generation of the menu squeleton went wrong");
             }
 
-            var screen = GenerateScreen(_entrypointSqueleton, provider);
+            var screen = GenerateScreen(_entrypointSqueleton, provider, testMod);
             await screen.Run();
         }
 
@@ -80,15 +81,16 @@ namespace MenuCLI
             return new MenuSqueleton(menu, menuAttributes.Title, menuAttributes.Description, choicesSqueleton);
         }
 
-        private static Menu GenerateScreen(MenuSqueleton menuSqueleton, IServiceProvider provider)
+        private static Menu GenerateScreen(MenuSqueleton menuSqueleton, IServiceProvider provider, bool testMod)
         {
+            IConsoleWrapper consoleWrapper = testMod ? new NoOpConsoleWrapper() : new ConsoleWrapper();
             var menu = provider.GetRequiredService(menuSqueleton.Menu);
-            var screen = new Menu(menuSqueleton.Title, menuSqueleton.Description);
+            var screen = new Menu(consoleWrapper, menuSqueleton.Title, menuSqueleton.Description);
             foreach (var method in menuSqueleton.ChoiceSqueletons)
             {
                 if (method.SubMenu != null)
                 {
-                    var subScreen = GenerateScreen(method.SubMenu, provider);
+                    var subScreen = GenerateScreen(method.SubMenu, provider, testMod);
                     screen.AddMenuChoice(
                         method.Description, 
                         async () => 
@@ -104,7 +106,7 @@ namespace MenuCLI
                     if (parameter.ParameterType == typeof(Menu) && parameter.GetCustomAttribute<MenuAttribute>() != null)
                     {
                         var menuAttribute = parameter.GetCustomAttribute<MenuAttribute>();
-                        Menu dynamicMenu = new Menu(menuAttribute?.Title ?? "Title", menuAttribute?.Description);
+                        Menu dynamicMenu = new Menu(consoleWrapper, menuAttribute?.Title ?? "Title", menuAttribute?.Description);
 
                         screen.AddMenuChoice(method.Description, async () => 
                         { 
